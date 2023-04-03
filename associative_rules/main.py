@@ -3,7 +3,7 @@ import numpy as np
 import seaborn as sn
 import matplotlib as plt
 
-data = pd.read_csv('C:/Users/filip/PycharmProjects/Firs_task_Zeleznyak/stasic//data.csv')
+data = pd.read_csv('C:/Users/filip/PycharmProjects/Firs_task_Zeleznyak/static//data.csv')
 unique_receipts = data.receipt_number.unique()
 print(len(unique_receipts))
 unique_products = data['product'].unique()
