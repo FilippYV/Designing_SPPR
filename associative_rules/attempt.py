@@ -61,6 +61,8 @@ if __name__ == '__main__':
         for j in new_data:
             if i[0] != j[0] and i[1] != j[1]:
                 new_data.append(i)
+        print(i)
+        print("Время = %s seconds" % (time.time() - start_time))
     mass_group_products = new_data
     print('Конец')
     print("Время = %s seconds" % (time.time() - start_time))
