@@ -23,7 +23,7 @@ if __name__ == '__main__':
                 micro_data.append(j[1])
         group_products_receipts.append(micro_data)
     print(group_products_receipts)
-    mass_group_products = []
+    mass_group_products = [[['x'],['x']]]
     count = 1
     last_len = 0
     for mass in group_products_receipts:
@@ -41,9 +41,13 @@ if __name__ == '__main__':
                 groups.append(list(comb))
         for i in range(len(groups)):
             for j in range(len(groups)):
-                if i != j and set(groups[j]).isdisjoint(groups[i]) and set(groups[i]).isdisjoint(groups[j]) and \
-                        [groups[i], groups[j]] not in mass_group_products:
-                    mass_group_products.append([groups[i], groups[j]])
+                if i != j and set(groups[j]).isdisjoint(groups[i]) and set(groups[i]).isdisjoint(groups[j]):
+                    on_off = False
+                    for k in mass_group_products:
+                        if groups[i] == k[0] and groups[j] == k[1]:
+                            on_off = True
+                    if not on_off:
+                        mass_group_products.append([groups[i], groups[j]])
         print('-'*25)
         print(f'Элемент {count} / {len(group_products_receipts)}')
         print('Количество элементов =', len(mass))
@@ -54,19 +58,19 @@ if __name__ == '__main__':
         last_len = len(group_products_receipts)
     print('\n' * 10)
     print(len(mass_group_products))
-    new_data = [[[0],[0]]]
-    print('Начало проверки')
-    start_time = time.time()
-    for i in mass_group_products:
-        for j in new_data:
-            if i[0] != j[0] and i[1] != j[1]:
-                new_data.append(i)
-        print(i)
-        print("Время = %s seconds" % (time.time() - start_time))
-    mass_group_products = new_data
-    print('Конец')
-    print("Время = %s seconds" % (time.time() - start_time))
-    print(len(mass_group_products))
+    # new_data = [[[0],[0]]]
+    # print('Начало проверки')
+    # start_time = time.time()
+    # for i in mass_group_products:
+    #     for j in new_data:
+    #         if i[0] != j[0] and i[1] != j[1]:
+    #             new_data.append(i)
+    #     print(i)
+    #     print("Время = %s seconds" % (time.time() - start_time))
+    # mass_group_products = new_data
+    # print('Конец')
+    # print("Время = %s seconds" % (time.time() - start_time))
+    # print(len(mass_group_products))
 
 
     # for i in group_products:
