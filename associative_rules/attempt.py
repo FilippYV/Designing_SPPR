@@ -54,11 +54,11 @@ if __name__ == '__main__':
         last_len = len(group_products_receipts)
     print('\n' * 10)
     print(len(mass_group_products))
-    new_data = []
+    new_data = [[[0],[0]]]
     print('Начало проверки')
     start_time = time.time()
     for i in mass_group_products:
-        for j in mass_group_products:
+        for j in new_data:
             if i[0] != j[0] and i[1] != j[1]:
                 new_data.append(i)
     mass_group_products = new_data
