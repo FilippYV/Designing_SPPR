@@ -1,7 +1,8 @@
 import itertools
+import time
+
 import pandas as pd
 import numpy as np
-
 if __name__ == '__main__':
 
     data = pd.read_csv('static//new_data.csv')
@@ -23,8 +24,11 @@ if __name__ == '__main__':
         group_products_receipts.append(micro_data)
     print(group_products_receipts)
     mass_group_products = []
-    count = 0
+    count = 1
+    last_len = 0
     for mass in group_products_receipts:
+        start_time = time.time()
+
         if len(mass) > 4:
             n = 4
         else:
@@ -35,8 +39,6 @@ if __name__ == '__main__':
             comb_not_sort = []
             for comb in permutation:
                 groups.append(list(comb))
-        print(f'N = {n}')
-        print('Количество элементов =', len(mass))
         for i in range(len(groups)):
             for j in range(len(groups)):
                 if i != j and set(groups[j]).isdisjoint(groups[i]) and set(groups[i]).isdisjoint(groups[j]) and \
@@ -44,10 +46,26 @@ if __name__ == '__main__':
                     mass_group_products.append([groups[i], groups[j]])
         print('-'*25)
         print(f'Элемент {count} / {len(group_products_receipts)}')
+        print('Количество элементов =', len(mass))
+        print("Время = %s seconds" % (time.time() - start_time))
+        print(f"Получено сочетаний {len(mass_group_products) - last_len}")
+        print(f'N = {n}')
         count += 1
+        last_len = len(group_products_receipts)
     print('\n' * 10)
     print(len(mass_group_products))
-    print(mass_group_products)
+    new_data = []
+    print('Начало проверки')
+    start_time = time.time()
+    for i in mass_group_products:
+        for j in mass_group_products:
+            if i[0] != j[0] and i[1] != j[1]:
+                new_data.append(i)
+    mass_group_products = new_data
+    print('Конец')
+    print("Время = %s seconds" % (time.time() - start_time))
+    print(len(mass_group_products))
+
 
     # for i in group_products:
     #     print(i)
