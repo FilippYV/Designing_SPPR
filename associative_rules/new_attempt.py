@@ -17,7 +17,7 @@ def out_data(data):
 
 def generate_combinations(data, count_comb):
     all_comb = []
-    for count_item in range(1, count_comb + 1):
+    for count_item in range(1, 5):
         permutation = itertools.permutations(data, count_item)
         comb_not_sort = []
         for comb in permutation:
@@ -26,7 +26,7 @@ def generate_combinations(data, count_comb):
         all_comb.append(comb_not_sort)
     print('=' * 50)
     comb_to_item = []
-    permutation = itertools.permutations([0, 1, 2, 3], 2)
+    permutation = itertools.permutations([0, 1, 2, 3], 4)
     for i in permutation:
         comb_to_item.append(list(i))
     return comb_to_item, all_comb
@@ -44,8 +44,62 @@ def generate_data_to_sort(comb_indexes, all_comb):
     print(all_data_comb)
 
 
+import itertools
+import time
+import pandas as pd
+import numpy as np
+
 if __name__ == '__main__':
-    unique_product = generate_data()
-    out_data(unique_product)
-    combination_indexes, all_combinations = generate_combinations(unique_product, 3)
-    generate_data_to_sort(combination_indexes, all_combinations)
+
+    data = pd.read_csv('static//new_data.csv')
+
+    unique_receipts = data.receipt_number.unique()
+    print(len(unique_receipts))
+
+    unique_products = data['product'].unique()
+    print(len(unique_products))
+
+    data_np = data.to_numpy()
+
+    group_products_receipts = []
+    for i in unique_receipts:
+        micro_data = []
+        for j in data_np:
+            if j[0] == i:
+                micro_data.append(j[1])
+        group_products_receipts.append(micro_data)
+
+    groups = []
+    for count_item in range(1, 5):
+        permutation = itertools.permutations(unique_products, count_item)
+        pod_g =[]
+        for comb in permutation:
+            pod_g.append(list(comb))
+        groups.append(pod_g)
+
+    print('--------------')
+    mass_group_products = [[['x'], ['X']]]
+    for x in groups:
+        start_time = time.time()
+        print(len(x))
+        for i in range(len(x)):
+            # start_time = time.time()
+            # print('Номер', i)
+            for j in range(len(x)):
+                if i != j and set(x[j]).isdisjoint(x[i]) and set(x[i]).isdisjoint(x[j]):
+                    on_off = True
+                    for k in mass_group_products:
+                        if sum(k, []) == sum([x[j], x[j]], []):
+                            on_off = False
+                    if on_off:
+                        mass_group_products.append([x[i], x[j]])
+        print("Время = %s seconds" % (time.time() - start_time))
+
+    print(len(mass_group_products))
+    print(mass_group_products[0], mass_group_products[1])
+
+# if __name__ == '__main__':
+#     unique_product = generate_data()
+#     out_data(unique_product)
+#     combination_indexes, all_combinations = generate_combinations(unique_product, 3)
+#     generate_data_to_sort(combination_indexes, all_combinations)
