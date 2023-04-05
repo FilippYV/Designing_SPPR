@@ -5,7 +5,7 @@ import numpy as np
 
 if __name__ == '__main__':
 
-    data = pd.read_csv('static//new_data.csv')
+    data = pd.read_csv('static/data/new_data.csv')
 
     unique_receipts = data.receipt_number.unique()
     print(len(unique_receipts))
