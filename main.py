@@ -1,171 +1,129 @@
+# -*- coding: utf-8 -*-
+from prettytable import PrettyTable
 import math
 
-mass = [
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 45],
-    ["Количество рейсов", 51],
-    ["Количество рейсов", 55],
-    ["Количество рейсов", 62],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 56],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 46],
-    ["Количество рейсов", 51],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 61],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 51],
-    ["Количество рейсов", 59],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 43],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 55],
-    ["Количество рейсов", 63],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 58],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 58],
-    ["Количество рейсов", 56],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 56],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 46],
-    ["Количество рейсов", 51],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 61],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 59],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 43],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 55],
-    ["Количество рейсов", 63],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 58],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 45],
-    ["Количество рейсов", 51],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 61],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 45],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 45],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 61],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 51],
-    ["Количество рейсов", 59],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 43],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 46],
-    ["Количество рейсов", 51],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 61],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 46],
-    ["Количество рейсов", 63],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 43],
-    ["Количество рейсов", 56],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 46],
-    ["Количество рейсов", 51],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 61],
-    ["Количество рейсов", 53],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 59],
-    ["Количество рейсов", 63],
-    ["Количество рейсов", 50],
-    ["Количество рейсов", 58],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 52],
-    ["Количество рейсов", 57],
-    ["Количество рейсов", 48]
 
-]
-minimum = 100
-maximum = 0
-for i in mass:
-    if i[1] < minimum:
-        minimum = i[1]
-    if i[1] > maximum:
-        maximum = i[1]
-print(minimum, 'min')
-print(maximum, 'max')
+def find(arr, element):
+    for i in range(len(arr)):
+        if arr[i] == element:
+            return 1
+    return 0
 
-print(f"{maximum - minimum}")
-count = [0] * 10
-for i in range(10):
-    count[i] = (minimum + i * 2)
-print(count)
 
-new_count = [0] * 10
-for i in range(len(count) - 1):
-    for j in mass:
-        if count[i] < j[1] <= count[i + 1]:
-            new_count[i] += 1
-        if count[len(count) - 1] < j[1] <= maximum:
-            new_count[-1] += 1
-print(new_count)
+def conctostr(arr, razd):
+    result = ""
+    for i in range(len(arr)):
+        if i != 0:
+            result = result + f"{razd}{arr[i]}"
+        else:
+            result = arr[i]
+    return result
 
-awg = [0] * 10
-for i in range(len(count) - 1):
-    for j in mass:
-        if count[i] < j[1] <= count[i + 1]:
-            awg[i] += j[1]
-        if count[len(count) - 1] < j[1] <= maximum:
-            awg[-1] += j[1]
-print(awg)
 
-new_awg = [0] * 10
-for i in range(len(count)):
-    new_awg[i] = new_count[i] / 100
-print(new_awg)
+def main():
+    Sup = 0.8
+    Sdown = 0.2
+    Cup = 0.8
+    Cdown = 0.2
 
-gg = [0] * 10
-for i in range(len(count)):
-    gg[i] = awg[i] / new_count[i]
-print(gg)
+    foods = []
+    poolofdeals = []
 
-mass_x = [106215, 115026, 125276, 135447, 144948, 156003, 166492,
-          177508, 184333, 195108]
-mass_p = [0.13, 0.11, 0.12, 0.06, 0.60, 0.10, 0.14, 0.60, 0.15, 0.70]
+    def getAssaciation(Aprint, Bprint):
+        A = Aprint.split(', ')
+        B = Bprint.split(', ')
 
-math_stop = 0
-for i in range(10):
-    math_stop += gg[i] * new_awg[i]
-    # math_stop += mass_p[i] * mass_x[i]
-print(math_stop)
+        # проверим коректность
+        for i in range(len(A)):
+            el = A[i]
+            if find(foods, el) == 0:
+                print(f"отсуствует элемент {el}")
+                return
+        for i in range(len(B)):
+            el = B[i]
+            if find(foods, el) == 0:
+                print(f"отсуствует элемент {el}")
+                return
+        ABsum = 0
+        Asum = 0
+        Bsum = 0
+        for i in range(len(poolofdeals)):
+            f = 0
+            for k in range(len(A)):
+                if find(poolofdeals[i], A[k]) == 0:
+                    break
+            else:
+                Asum = Asum + 1
+                f = 1
+            for k in range(len(B)):
+                if find(poolofdeals[i], B[k]) == 0:
+                    break
+            else:
+                Bsum = Bsum + 1
+                if f == 1:
+                    ABsum = ABsum + 1
+        SAB = ABsum / len(poolofdeals)
+        if Asum != 0:
+            CAB = ABsum / Asum
+        else:
+            CAB = 0
+        SB = Bsum / len(poolofdeals)
+        LAB = CAB / SB
+        return [Aprint, Bprint, SAB, CAB, LAB]
 
-disp = 0
-for i in range(10):
-    disp += (gg[i]) ** 2 * new_awg[i]
-    # disp += mass_p[i] * (mass_x[i]) ** 2
-disp = disp - (math_stop ** 2)
-print(disp)
-print(math.sqrt(abs(disp)))
+    f = open('checs.txt')
+    l = []
+    for line in f:
+        i = line.find('\n')
+        if i != -1:
+            line = line[:i]
+        l.append(line.split('/'))
+    for i in range(len(l)):
+        num = l[i][0]
+        index = -1
+        for j in range(len(poolofdeals)):
+            if poolofdeals[j][0] == num:
+                index = j
+                break
+        for j in range(len(l[i])):
+            if j != 0 and find(foods, l[i][j]) == 0:
+                foods.append(l[i][j])
+        if index == -1:
+            poolofdeals.append(l[i])
+            poolofdeals.sort(key=lambda x: x[0])
+        else:
+            for j in range(len(l[i])):
+                if j != 0:
+                    if find(poolofdeals[index], l[i][j]) == 0:
+                        poolofdeals[index].append(l[i][j])
+    foods.sort()
+    print(poolofdeals)
+    print(foods)
+    print()
+    reterntabl = PrettyTable()
+    reterntablsize = 1
+    reterntabl.field_names = ["номер", "правило", "следствие", "потдержка", "достоверность", "лифт"]
+    workingCombinations = foods
+    for i in range(len(foods)):
+        print(i)
+        combinations = []
+        for j in range(len(workingCombinations)):
+            for k in range(len(foods)):
+                if find(workingCombinations[j].split(', '), foods[k]) == 0:
+                    split = workingCombinations[j].split(', ')
+                    split.append(foods[k])
+                    split.sort()
+                    split = conctostr(split, ', ')
+                    result = getAssaciation(workingCombinations[j], foods[k])
+                    print(result)
+                    if (result[2] <= Sup and result[2] >= Sdown and result[3] <= Cup and result[3] >= Cdown):
+                        reterntabl.add_row([reterntablsize, result[0], result[1], result[2], result[3], result[4]])
+                        reterntablsize = reterntablsize + 1
+                        if find(combinations, split) == 0:
+                            combinations.append(split)
+        workingCombinations = combinations
+    print(reterntabl)
 
-entr = 0
-for i in range(len(count)):
-    entr += new_awg[i] * math.log2(new_awg[i])
-print(f'entropy = {-entr}')
+
+if __name__ == '__main__':
+    main()
