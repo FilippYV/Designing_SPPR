@@ -169,3 +169,10 @@ entr = 0
 for i in range(len(count)):
     entr += new_awg[i] * math.log2(new_awg[i])
 print(f'entropy = {-entr}')
+
+
+
+abcde = ['a' ,'fx', 'fd', 'fx', 'aa', 'ab']
+abcde = sorted(abcde)
+for i in abcde:
+    print(i)
