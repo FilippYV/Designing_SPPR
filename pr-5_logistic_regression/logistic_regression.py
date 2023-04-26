@@ -87,7 +87,20 @@ def stop_graph(mass_data, mass_answers, weights):
 
 
 def count_logloss(data, answers, classifier_weights):
-    pass
+    program_answer = []
+    for i in range(len(data)):
+        logit = data[i] * classifier_weights[0] + answers[i] * classifier_weights[1]
+        sigmoid = 1 / (1 + math.e ** -logit)
+        program_answer.append(sigmoid)
+    first_class = 1
+    second_class = 1
+    for i in range(len(data)):
+        if answers[i] == 1:
+            first_class *= program_answer[i]
+        else:
+            second_class *= 1 - program_answer[i]
+    logloss = abs(math.log(first_class * second_class) / len(data))
+    print(f'logloss = {logloss}')
 
 
 if __name__ == '__main__':
