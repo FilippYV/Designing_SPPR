@@ -101,10 +101,27 @@ def count_logloss(data, answers, classifier_weights):
             second_class *= 1 - program_answer[i]
     logloss = abs(math.log(first_class * second_class) / len(data))
     print(f'logloss = {logloss}')
+    return logloss
+
+
+def graph_logloss(logloss):
+    fig = plt.figure(figsize=(10, 7))
+    axis = fig.add_subplot()
+    iteration = []
+    for i in range(len(logloss)):
+        iteration.append(i)
+    for i, data in enumerate(logloss):
+        axis.scatter(i, data, s=50, color='red')
+    plt.plot(iteration, logloss)
+    plt.title('График изменения logloss')
+    plt.xlabel('Итерации')
+    plt.ylabel('logloss')
+    plt.savefig('static//graph_logloss.png')
 
 
 if __name__ == '__main__':
     count_value = 100
+    logloss = []
     data, answers = generate_value(count_value)
     # classifier_weights = [random.random(), random.random()]
     classifier_weights = [0.653569605, 0.39508814945259281]
@@ -113,9 +130,9 @@ if __name__ == '__main__':
     for i in range(15):
         print(f'\nИтерация {i} |', end='')
         classifier_weights = count_classifier_weight(data, answers, classifier_weights)
-        count_logloss(data, answers, classifier_weights)
+        logloss.append(count_logloss(data, answers, classifier_weights))
     stop_graph(data, answers, classifier_weights)
-
+    graph_logloss(logloss)
     print('\nФинальная таблица')
     for i in range(len(data)):
         print(
