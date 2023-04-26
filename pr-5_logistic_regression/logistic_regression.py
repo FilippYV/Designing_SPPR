@@ -14,7 +14,6 @@ def generate_value(count):  # генерируем данные
         else:
             mass_data.append(x / 1000)
             mass_answers.append(0)
-    print('\n' * 10)
     print(mass_data)
     print(mass_answers)
     return mass_data, mass_answers
@@ -137,3 +136,16 @@ if __name__ == '__main__':
     for i in range(len(data)):
         print(
             f'№{i} data = {data[i]}, aswer_y = {answers[i]}, {1 / (1 + math.e ** -(data[i] * classifier_weights[0] + answers[i] * classifier_weights[1]))}')
+
+    print('')
+    print(f'predict: x = 260')
+    print('Вероятность отсенения к 1 классу', end=' = ')
+    print(f'{1 / (1 + math.e ** -(0.260 * classifier_weights[0] + classifier_weights[1]))}')
+    print('Вероятность отсенения к 2 классу', end=' = ')
+    print(f'{1 - (1 / (1 + math.e ** -(0.260 * classifier_weights[0] + classifier_weights[1])))}')
+    print('')
+    print(f'predict: x = 10')
+    print('Вероятность отсенения к 1 классу', end=' = ')
+    print(f'{1 / (1 + math.e ** -(0.010 * classifier_weights[0] + classifier_weights[1]))}')
+    print('Вероятность отсенения к 2 классу', end=' = ')
+    print(f'{1 - (1 / (1 + math.e ** -(0.010 * classifier_weights[0] + classifier_weights[1])))}')
