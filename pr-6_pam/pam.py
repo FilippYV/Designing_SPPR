@@ -156,7 +156,8 @@ def elbow_method(mass):
             index_i = central_points[class_name]
             for index_j, j in enumerate(mass_for_relocation):
                 if mass_to_clusters[index_j] == class_name:
-                    elbow_length += math.sqrt((mass[index_i][0] - mass[j][0]) ** 2 + (mass[index_i][1] - mass[j][1]) ** 2)
+                    elbow_length += math.sqrt(
+                        (mass[index_i][0] - mass[j][0]) ** 2 + (mass[index_i][1] - mass[j][1]) ** 2)
         mass_elbow_length.append([elbow_length])
         graph_elbow_long(mass_elbow_length)
 
@@ -224,7 +225,6 @@ def centroid(mass):
     graph_centroid(mass, central_points, k, color, mass_to_clusters)
 
 
-
 def graph_centroid(mass, central_points, k, color, mass_to_clusters):
     fig = plt.figure(figsize=(10, 7))
     axis = fig.add_subplot()
@@ -239,10 +239,10 @@ def graph_centroid(mass, central_points, k, color, mass_to_clusters):
     fig.clear()
     plt.close(fig)
 
+
 if __name__ == '__main__':
     count_point = 50
     data = generate_data(count_point)
     start_graph(data)
     elbow_method(data)
     centroid(data)
-
