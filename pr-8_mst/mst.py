@@ -63,7 +63,6 @@ def formation_all_possible_paths(graph, massive_visited_cities, massive_route):
         massive_visited_cities.append(graph[paths_index][1])
     massive_route.append(paths_index)
     print(massive_visited_cities)
-
     time.sleep(0.1)
 
 
