@@ -241,7 +241,6 @@ def central_point(central_cluster):
     plt.savefig('static//start_graph_c_contur.png')
     fig.clear()
 
-
     count_merge_ = 1
     print('-----------')
     print(mass_to_splete)
@@ -268,6 +267,7 @@ def central_point(central_cluster):
     plt.ylabel('Ось Y')
     plt.savefig('static//start_graph_c_end.png')
     fig.clear()
+
 
 def graph_c(data, massive_path, central_cluster):
     fig = plt.figure(figsize=(10, 7))
