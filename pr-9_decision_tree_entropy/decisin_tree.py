@@ -110,33 +110,33 @@ if __name__ == '__main__':
     print(f'    Выбираем {1}ую переменнную в качестве второго узла')
     print(f'    Энтропия = 0')
     # print('\n' * 5)
-    # mass_element_to_tree = []
-    # mass_element_to_tree.append(max_ig[0])
+    mass_element_to_tree = []
+    mass_element_to_tree.append(max_ig[0])
     #
-    # unique_elements.pop(max_ig[0])
-    # count_elements.pop(max_ig[0])
-    # print('new_unique_elements', unique_elements)
-    # print('new_count_elements', count_elements)
-    # search_entropy_for_two = [0, 0]
-    # entropy_two = [0] * 8
-    # for i in range(len(data)):
-    #     if data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 0 and answers[i] == 0:
-    #         entropy_two[0] += 1
-    #     elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 0 and answers[i] == 1:
-    #         entropy_two[1] += 1
-    #     elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 1 and answers[i] == 0:
-    #         entropy_two[2] += 1
-    #     elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 1 and answers[i] == 1:
-    #         entropy_two[3] += 1
-    #     elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 1 and answers[i] == 0:
-    #         entropy_two[4] += 1
-    #     elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 1 and answers[i] == 1:
-    #         entropy_two[5] += 1
-    #     elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 0 and answers[i] == 0:
-    #         entropy_two[6] += 1
-    #     elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 0 and answers[i] == 1:
-    #         entropy_two[7] += 1
-    # print("entropy_two", entropy_two)
+    unique_elements.pop(max_ig[0])
+    count_elements.pop(max_ig[0])
+    print('new_unique_elements', unique_elements)
+    print('new_count_elements', count_elements)
+    search_entropy_for_two = [0, 0]
+    entropy_two = [0] * 8
+    for i in range(len(data)):
+        if data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 0 and answers[i] == 0:
+            entropy_two[0] += 1
+        elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 0 and answers[i] == 1:
+            entropy_two[1] += 1
+        elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 1 and answers[i] == 0:
+            entropy_two[2] += 1
+        elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 1 and answers[i] == 1:
+            entropy_two[3] += 1
+        elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 1 and answers[i] == 0:
+            entropy_two[4] += 1
+        elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 1 and answers[i] == 1:
+            entropy_two[5] += 1
+        elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 0 and answers[i] == 0:
+            entropy_two[6] += 1
+        elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 0 and answers[i] == 1:
+            entropy_two[7] += 1
+    print("entropy_two", entropy_two)
 
     # print('tree')
     # print(
