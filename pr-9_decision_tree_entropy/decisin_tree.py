@@ -131,6 +131,7 @@ if __name__ == '__main__':
     # print(new_entropy, 'new_entropy')
     # exit()
     entropy_two = [0] * len(unique_elements[0]) * len(unique_elements[1]) * len(unique_elements[2])
+
     for i in range(len(data)):
         if data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 1 and answers[i] == 0:
             entropy_two[0] += 1
@@ -148,7 +149,6 @@ if __name__ == '__main__':
             entropy_two[6] += 1
         elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 1 and answers[i] == 1:
             entropy_two[7] += 1
-
     # for i in range(len(data)):
     #     if data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 1 and answers[i] == 0:
     #         entropy_two[0] += 1

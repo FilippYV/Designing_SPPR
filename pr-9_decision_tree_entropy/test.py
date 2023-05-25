@@ -113,7 +113,8 @@ def count_ig(search_entropy):
         IG[i] -= ig
     print('IG', IG)
     print()
-    return  IG
+    return IG
+
 
 def selection_criteria(IG):
     # выбор первого критерия
@@ -126,14 +127,58 @@ def selection_criteria(IG):
     print('IG =', max, '\nКритерий =', iteration)
     print()
     tree.append(iteration)
+    tree_entropy.append(start_entropy)
     print('Полученное дерево')
-    for i in tree:
-        print(i)
+    for i, ii in enumerate(tree):
+        print('Критерий', tree[i])
+        print('Энтропия -', tree_entropy[i])
     print()
+
+
+def select_next_criteria(tree, tree_entropy, x, y, unique_data, unique_answer):
+    if len(tree[-1]) == 1:
+        new_entropy = [0] * (sum(len(i) for i in unique_data) * len(unique_answer))
+        count = 0
+        count_index = 0
+        for a, aa in enumerate(unique_answer):
+        for i, ii in enumerate(unique_data[tree[-1]]):
+            for j, jj in enumerate(unique_data):
+                if j not in tree:
+                    for k, kk in enumerate(jj):
+
+
+
+
+
+    else:
+        pass
+    exit(123)
+
+
+    # for i in range(len(x)):
+    #     if data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 1 and answers[i] == 0:
+    #         entropy_two[0] += 1
+    #     elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 1 and answers[i] == 1:
+    #         entropy_two[1] += 1
+    #     elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 0 and answers[i] == 0:
+    #         entropy_two[2] += 1
+    #     elif data[i][mass_element_to_tree[-1]] == 0 and data[i][1] == 0 and answers[i] == 1:
+    #         entropy_two[3] += 1
+    #     elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 0 and answers[i] == 0:
+    #         entropy_two[4] += 1
+    #     elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 0 and answers[i] == 1:
+    #         entropy_two[5] += 1
+    #     elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 1 and answers[i] == 0:
+    #         entropy_two[6] += 1
+    #     elif data[i][mass_element_to_tree[-1]] == 1 and data[i][1] == 1 and answers[i] == 1:
+    #         entropy_two[7] += 1
+
+    pass
 
 
 if __name__ == '__main__':
     tree = []
+    tree_entropy = []
     x, y = generate_data()
     unique_data, count_data = calculation_of_unique_values(x)
     unique_answer, count_answer = calculation_of_unique_responses(y)
@@ -141,3 +186,4 @@ if __name__ == '__main__':
     search_entropy = count_entropy_outcomes()
     ig = count_ig(search_entropy)
     selection_criteria(ig)
+    select_next_criteria(tree, tree_entropy, x, y, unique_data, unique_answer)
