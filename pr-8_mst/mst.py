@@ -15,6 +15,9 @@ def generate_start_graph(count):
     # print()
     graph = [[0, 1, 38], [0, 2, 22], [0, 3, 22], [0, 4, 24], [1, 2, 14], [1, 3, 27], [1, 4, 32], [2, 3, 26], [2, 4, 28],
              [3, 4, 39]]
+    # for i in graph:
+    #     print(i[2])
+    # print("----")
     return graph
 
 
@@ -43,7 +46,7 @@ def new_iter_graph(massive_visited_cities, count, iteration):
     print()
 
 
-def formation_all_possible_paths(graph, massive_visited_cities, massive_route):
+def formation_all_possible_paths(graph, massive_visited_cities, massive_route, long, mass_index):
     massive_to_search_min = []
     for i in range(len(graph)):
         if graph[i][0] not in massive_visited_cities and graph[i][1] in massive_visited_cities or \
@@ -56,7 +59,8 @@ def formation_all_possible_paths(graph, massive_visited_cities, massive_route):
     for i in range(len(massive_to_search_min)):
         if massive_to_search_min[i][0][2] < minimum_paths:
             paths_index, minimum_paths = massive_to_search_min[i][1], massive_to_search_min[i][0][2]
-
+    print(minimum_paths, "= long")
+    mass_index.append([graph[paths_index][0], graph[paths_index][1]])
     if graph[paths_index][0] not in massive_visited_cities:
         massive_visited_cities.append(graph[paths_index][0])
     elif graph[paths_index][1] not in massive_visited_cities:
@@ -64,6 +68,7 @@ def formation_all_possible_paths(graph, massive_visited_cities, massive_route):
     massive_route.append(paths_index)
     print(massive_visited_cities)
     time.sleep(0.1)
+    return long + minimum_paths, mass_index
 
 
 if __name__ == '__main__':
@@ -77,10 +82,15 @@ if __name__ == '__main__':
     massive_visited_cities.append(start_city)
     new_iter_graph(massive_visited_cities, count_city, iteration)
     iteration += 1
+    long = 0
+    mass_index = []
     while len(massive_visited_cities) < count_city:
-        formation_all_possible_paths(graph, massive_visited_cities, massive_route)
+        long, mass_index = formation_all_possible_paths(graph, massive_visited_cities, massive_route,long, mass_index)
         new_iter_graph(massive_visited_cities, count_city, iteration)
         iteration += 1
     print()
     print(massive_visited_cities)
     print(massive_route)
+    for i, ii in enumerate(mass_index):
+        print(f"Итерация {i}: от {ii[0]} до {ii[1]}")
+    print(f"len = {long}")

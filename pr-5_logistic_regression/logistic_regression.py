@@ -80,8 +80,11 @@ def count_logloss(data, answers, classifier_weights, program_answer):
     logloss = 0
     for i in range(len(data)):
         logloss += math.log(program_answer[i]) * answers[i] + (1 - answers[i]) * math.log(1 - program_answer[i] + 1e-30)
+        # x = f"{round(answers[i], 2)} * log({round(program_answer[i], 2)}) + (1 - {round(answers[i], 2)}) + log(1 - {round(program_answer[i], 2)})"
+        # print(f"({x.replace('.', ',')})")
     logloss = (-logloss) / len(data)
     print(f'logloss = {logloss}')
+    # exit()
     return logloss
 
 
@@ -92,9 +95,16 @@ def count_classifier_weight(data, answers, classifier_weights):
         classifier_weights[0] -= -(answers[i] - sigmoid)
         classifier_weights[1] -= -(answers[i] - sigmoid) * data[i][0]
         classifier_weights[2] -= -(answers[i] - sigmoid) * data[i][1]
+        # print(f"{round(classifier_weights[0], 2)} -= -({round(answers[i], 2)} - {round(sigmoid, 2)})")
+        # print(
+        #     f"{round(classifier_weights[1], 2)} -= -({round(answers[i], 2)} - {round(sigmoid, 2)}) * {round(data[i][0], 2)}")
+        # print(
+        #     f"{round(classifier_weights[2], 2)} -= -({round(answers[i], 2)} - {round(sigmoid, 2)}) * {round(data[i][1], 2)}")
 
+        # exit(123)
     print(f'Результат: [{round(classifier_weights[0], 9)}, {round(classifier_weights[1], 9)},'
           f' {round(classifier_weights[2], 9)}] | ', end='')
+    print()
     return classifier_weights
 
 
@@ -135,9 +145,7 @@ def stop_graph(mass_data, mass_answers, weights, program_answer):
         axis.scatter(summ_point_exam[i], sigmoid, color=f'{mass_color[mass_answers[i]][0]}')
     plt.plot(summ_point_exam, mass_sigm, color='orange')
     plt.axhline(y=0.5, color='black', linestyle='-')
-    plt.title('Начальный граф распеределния')
-    plt.xlabel('Количество баллов за 2 предмета')
-    plt.ylabel('Распределение')
+    plt.title('Конечный граф распеределния')
     plt.savefig('static//stop_graph.png')
 
 
@@ -163,7 +171,7 @@ if __name__ == '__main__':
     print(f'Изначальные веса: {classifier_weights}')
     start_graph(data, answers, classifier_weights)
     program_answer = calculation_program_answer(data, answers, classifier_weights)
-    count_interation = 1
+    count_interation = 50
     for iteration in range(count_interation):
         print(f'\nИтерация {iteration} |', end='')
         program_answer = calculation_program_answer(data, answers, classifier_weights)
@@ -176,7 +184,8 @@ if __name__ == '__main__':
     print('\nФинальная таблица')
     for i in range(len(data)):
         print(
-            f'№{i} data = {data[i]}| y = {answers[i]}| y_p = {program_answer[i]}\n')
+            f'№{i} data = {data[i]}| y = {answers[i]}| y_p = {program_answer[i]}')
+    print()
 
     predict(0.75, 0.25)
     predict(0.99, 0.99)
