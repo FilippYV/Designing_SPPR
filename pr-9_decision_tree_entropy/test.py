@@ -16,17 +16,18 @@ def generate_data():
     return data, answers
 
 
-x, y = generate_data()
-mass_entropy_ = []
-# все уникальне критерии и их количества
-unique_data = []
-for j in range(len(x[0])):
-    mass_to_unique = []
-    for i in range(len(x)):
-        if x[i][j] not in mass_to_unique:
-            mass_to_unique.append(x[i][j])
-    mass_to_unique.sort()
-    unique_data.append(mass_to_unique)
+if __name__ == '__main__':
+    x, y = generate_data()
+    mass_entropy_ = []
+    # все уникальне критерии и их количества
+    unique_data = []
+    for j in range(len(x[0])):
+        mass_to_unique = []
+        for i in range(len(x)):
+            if x[i][j] not in mass_to_unique:
+                mass_to_unique.append(x[i][j])
+        mass_to_unique.sort()
+        unique_data.append(mass_to_unique)
 print('Уникальные значения у критериев:', unique_data)
 
 count_data = []
@@ -113,12 +114,12 @@ print('IG =', max, '\nКритерий =', iteration)
 tree.append(iteration)
 print(tree)
 
-countss  = []
+countss = []
 for i in unique_data[tree[0]]:
     count2 = []
-    for j in unique_data[1]:
+    for yy in unique_answer:
         count1 = []
-        for yy in unique_answer:
+        for j in unique_data[1]:
             count = 0
             for h, hh in enumerate(x):
                 if hh[0] == i and hh[1] == j and y[h] == 0:
@@ -136,10 +137,12 @@ for i in range(len(search_entropy)):
     for j in range(len(search_entropy[i])):
         entropy = 0
         for k in range(len(search_entropy[i][j])):
-            if count_data[i][j] > 0 :
+            if search_entropy[i][j][k] / count_data[i][j] > 0:
+                print(search_entropy[i][j][k] / count_data[i][j])
                 entropy += -(search_entropy[i][j][k] / count_data[i][j]) * math.log2(search_entropy[i][j][k] / count_data[i][j])
             else:
                 entropy += 0
+
         entropy_critery.append(entropy)
     mass_entropy.append(entropy_critery)
 print('mass_entropy', mass_entropy)
@@ -149,7 +152,7 @@ for i in range(len(IG)):
     IG[i] += start_entropy
     ig = 0
     for j in range(len(count_data[i])):
-            ig += (count_data[i][j] / (len(x))) * mass_entropy[i][j]
-            # print(count_data[i][j])
+        ig += (count_data[i][j] / (len(x))) * mass_entropy[i][j]
+        # print(count_data[i][j])
     IG[i] -= ig
 print('IG', IG)
