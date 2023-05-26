@@ -87,9 +87,38 @@ def count_elements_calculate_entropy(unique_data, unique_answer):
     print()
     return search_entropy
 
+
+def entropy_calculation_for_all_initial_outcomes(search_entropy, massive_entropy):
+    # расчёт энтропии для всех начальных исходов
+    mass_entropy = []
+    for i in range(len(search_entropy)):
+        entropy_critery = []
+        for j in range(len(search_entropy[i])):
+            entropy = 0
+            for k in range(len(search_entropy[i][j])):
+                entropy += -(search_entropy[i][j][k] / count_data[i][j]) * \
+                           math.log2(search_entropy[i][j][k] / count_data[i][j])
+            entropy_critery.append(entropy)
+        mass_entropy.append(entropy_critery)
+    print('mass_entropy', mass_entropy)
+    IG = [0] * len(unique_data)
+    # print('IG', IG)
+    for i in range(len(IG)):
+        IG[i] += massive_entropy[-1]
+        ig = 0
+        for j in range(len(count_data[i])):
+            ig += (count_data[i][j] / (len(x))) * mass_entropy[i][j]
+        IG[i] -= ig
+    print('IG', IG)
+    maximum = [0, 0]
+    for i, ii in enumerate(IG):
+        if ii > maximum[1]:
+            maximum = [i, ii]
+    print(maximum)
+
 def calculation_first_variable(count_data, unique_data, count_answer, unique_answer, massive_entropy):
     search_entropy = count_elements_calculate_entropy(unique_data, unique_answer)
-
+    entropy_calculation_for_all_initial_outcomes(search_entropy, massive_entropy)
 
 
 if __name__ == '__main__':
