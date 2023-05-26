@@ -1,22 +1,40 @@
 import random
 import math
 import matplotlib.pyplot as plt
-import matplotlib.lines as line
-import numpy as np
 
 
 def generate_value(count):  # генерируем данные
     mass_data = []
     mass_answers = []
-    for i in range(count):
-        x = random.randint(0, 100)
-        y = random.randint(0, 100)
-        if x + y >= 100:
-            mass_data.append([x / 100, y / 100])
-            mass_answers.append(1)
-        else:
-            mass_data.append([x / 100, y / 100])
-            mass_answers.append(0)
+    mass_data = [[0.46, 0.43],
+                 [0.62, 0.36],
+                 [0.53, 0.93],
+                 [0.73, 0.12],
+                 [0.5, 0.91],
+                 [0.82, 0.08],
+                 [0.03, 1.0],
+                 [0.82, 0.21],
+                 [0.4, 0.18],
+                 [0.25, 0.01]]
+    mass_answers = [0, 0, 1, 0, 1, 0, 1, 1, 0, 0]
+
+    # for i in range(count):
+    #     x = random.randint(0, 100)
+    #     y = random.randint(0, 100)
+    #     if x + y >= 100:
+    #         mass_data.append([x / 100, y / 100])
+    #         mass_answers.append(1)
+    #     else:
+    #         mass_data.append([x / 100, y / 100])
+    #         mass_answers.append(0)
+
+    # for i in mass_data:
+    #     print(str(i[1]).replace('.', ','))
+    #     # x = x.replace('.', ',')
+    #     # print(x)
+    # print("mass_answers")
+    # for i in mass_answers:
+    #     print(i)
     print(mass_data)
     print(mass_answers)
     return mass_data, mass_answers
@@ -39,10 +57,22 @@ def start_graph(mass_data, mass_answers, weights):
 
 def calculation_program_answer(data, answers, classifier_weights):
     program_answer = []
+    # loggit_table = []
+    # sigmoid_table = []
     for i in range(len(data)):
         logit = classifier_weights[0] + data[i][0] * classifier_weights[1] + data[i][1] * classifier_weights[2]
+        # print(f'{logit} = {classifier_weights[0]} + {data[i][0]} * {classifier_weights[1]} + {data[i][1]} *'
+        #       f' {classifier_weights[2]}')
+        # loggit_table.append(logit)
         sigmoid = 1 / (1 + math.e ** (-logit))
+        # sigmoid_table.append(sigmoid)
+        # print(f"{sigmoid} = 1 / (1 + math.e ** {(-logit)})")
+        # print()
         program_answer.append(sigmoid)
+    # exit(123)
+    # for i in sigmoid_table:
+    #     print(round(i,2))
+
     return program_answer
 
 
@@ -125,7 +155,7 @@ def predict(x, y):
 
 
 if __name__ == '__main__':
-    count_value = 100
+    count_value = 10
     logloss = []
     data, answers = generate_value(count_value)
     # classifier_weights = [random.random(), random.random(), random.random()]
@@ -133,8 +163,9 @@ if __name__ == '__main__':
     print(f'Изначальные веса: {classifier_weights}')
     start_graph(data, answers, classifier_weights)
     program_answer = calculation_program_answer(data, answers, classifier_weights)
-    for iter in range(50):
-        print(f'\nИтерация {iter} |', end='')
+    count_interation = 1
+    for iteration in range(count_interation):
+        print(f'\nИтерация {iteration} |', end='')
         program_answer = calculation_program_answer(data, answers, classifier_weights)
         logloss.append(count_logloss(data, answers, classifier_weights, program_answer))
         classifier_weights = count_classifier_weight(data, answers, classifier_weights)
