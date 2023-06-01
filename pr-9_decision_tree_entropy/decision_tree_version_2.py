@@ -11,6 +11,8 @@ def generate_data():
             [0, 0],
             [1, 1]]
     answers = [1, 1, 1, 1, 0, 0, 0, 0]
+    for i in answers:
+        print(i)
     return data, answers
 
 
@@ -86,7 +88,7 @@ def count_elements_calculate_entropy(unique_data, unique_answer):
     return search_entropy
 
 
-def entropy_calculation_for_all_initial_outcomes(search_entropy, massive_entropy, massive_tree):
+def entropy_calculation_for_all_initial_outcomes(search_entropy, massive_entropy):
     # расчёт энтропии для всех начальных исходов
     mass_entropy = []
     for i in range(len(search_entropy)):
@@ -94,11 +96,8 @@ def entropy_calculation_for_all_initial_outcomes(search_entropy, massive_entropy
         for j in range(len(search_entropy[i])):
             entropy = 0
             for k in range(len(search_entropy[i][j])):
-                if search_entropy[i][j][k] / count_data[i][j] > 0:
-                    entropy += -(search_entropy[i][j][k] / count_data[i][j]) * \
-                               math.log2(search_entropy[i][j][k] / count_data[i][j])
-                else:
-                    entropy += 0
+                entropy += -(search_entropy[i][j][k] / count_data[i][j]) * \
+                           math.log2(search_entropy[i][j][k] / count_data[i][j])
             entropy_critery.append(entropy)
         mass_entropy.append(entropy_critery)
     print('mass_entropy', mass_entropy)
@@ -116,74 +115,10 @@ def entropy_calculation_for_all_initial_outcomes(search_entropy, massive_entropy
         if ii > maximum[1]:
             maximum = [i, ii]
     print(maximum)
-    print()
-    massive_tree.append([maximum[0]])
-    massive_entropy.append(mass_entropy[maximum[0]])
 
-
-def calculation_first_variable(count_data, unique_data, count_answer, unique_answer, massive_entropy, massive_tree):
+def calculation_first_variable(count_data, unique_data, count_answer, unique_answer, massive_entropy):
     search_entropy = count_elements_calculate_entropy(unique_data, unique_answer)
-    entropy_calculation_for_all_initial_outcomes(search_entropy, massive_entropy, massive_tree)
-
-
-def calculation_new_entropy(new_entropy):
-    summ_ent = []
-    for i in new_entropy:
-        mass = []
-        for j in i:
-            count = 0
-            for k in j:
-                count += k
-            mass.append(count)
-        summ_ent.append(mass)
-    print(summ_ent)
-    return summ_ent
-
-
-def calculate_next_entropy(massive_tree, massive_entropy, count_data, unique_data, count_answer, unique_answer, x, y):
-    new_entropy = []
-    for i in unique_answer:
-        mass_1 = []
-        for j in unique_data[0]:
-            mass_2 = []
-            for k in unique_data[1]:
-                count = 0
-                for d, dd in enumerate(x):
-                    if x[d][0] == j and x[d][1] == k and y[d] == i:
-                        count += 1
-                mass_2.append(count)
-            mass_1.append(mass_2)
-        new_entropy.append(mass_1)
-    print(new_entropy)
-    summ_ent = calculation_new_entropy(new_entropy)
-    mass_entropy = []
-    for i, ii in enumerate(new_entropy):
-        # расчёт энтропии для всех начальных исходов
-        entropy_critery = []
-        for j in range(len(ii)):
-            entropy = 0
-            for k in range(len(ii[j])):
-                if ii[j][k] / summ_ent[i][j] > 0:
-                    entropy += -(ii[j][k] / summ_ent[i][j]) * \
-                               math.log2(ii[j][k] / summ_ent[i][j])
-                else:
-                    entropy += 0
-            entropy_critery.append(entropy)
-        mass_entropy.append(entropy_critery)
-    print('mass_entropy', mass_entropy)
-    IG = [0] * len(unique_data)
-    # print('IG', IG)
-    for i in range(len(IG)):
-        IG[i] += massive_entropy[-1][0]
-        ig = 0
-        for j in range(len(count_data[i])):
-            ig += (count_data[i][j] / (len(x))) * mass_entropy[i][j]
-        IG[i] -= ig
-    print('IG', IG)
-    massive_entropy.append(mass_entropy)
-    massive_tree.append([1, 1])
-    print()
-    return new_entropy
+    entropy_calculation_for_all_initial_outcomes(search_entropy, massive_entropy)
 
 
 if __name__ == '__main__':
@@ -192,14 +127,6 @@ if __name__ == '__main__':
 
     x, y = generate_data()
     count_data, unique_data, count_answer, unique_answer = calculation_of_unique_values(x, y)
-    massive_entropy.append(calculation_initial_entropy(count_answer, y, ))
-    calculation_first_variable(count_data, unique_data, count_answer, unique_answer, massive_entropy, massive_tree)
-    calculate_next_entropy(massive_tree, massive_entropy, count_data, unique_data, count_answer, unique_answer, x, y)
-    print()
-    print(f'Дерво:')
-    for i in massive_tree:
-        print(i)
-    print()
-    print(f'Ентропия на всех участках дерева:')
-    for i in massive_entropy:
-        print(i)
+    massive_entropy.append(calculation_initial_entropy(count_answer, y))
+    calculation_first_variable(count_data, unique_data, count_answer, unique_answer, massive_entropy)
+
