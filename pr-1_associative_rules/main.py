@@ -1,14 +1,19 @@
 import pandas as pd
-import numpy as np
-import seaborn as sn
-import matplotlib as plt
+import itertools
+import time
 
-data = pd.read_csv('C:/Users/filip/PycharmProjects/Firs_task_Zeleznyak/static//data.csv')
+data = pd.read_csv('static/data//new_data.csv')
 unique_receipts = data.receipt_number.unique()
 print(len(unique_receipts))
+print(unique_receipts)
+
+count_receipt = len(unique_receipts)
 unique_products = data['product'].unique()
 print(len(unique_products))
+print(unique_products)
+
 data_np = data.to_numpy()
+
 group_products_receipts = []
 for i in unique_receipts:
     micro_data = []
@@ -16,89 +21,107 @@ for i in unique_receipts:
         if j[0] == i:
             micro_data.append(j[1])
     group_products_receipts.append(micro_data)
-dataframe = pd.DataFrame({'receipt': unique_receipts,
 
-                          'product': group_products_receipts},
-                         columns=['receipt', 'product'])
-procent_product_in_receipt = []
-len_dataframe = len(dataframe)
-count_product_procent_ = []
-for x in unique_products:
-    count_product = 0
-    for i in group_products_receipts:
-        switch = False
-        for j in i:
-            if j == x:
-                switch = True
-        if switch:
-            count_product += 1
-    count_product_procent_.append(count_product)
-for i in range(len(count_product_procent_)):
-    count_product_procent_[i] = round(count_product_procent_[i]/len_dataframe, 2)
-count_product_procent = []
-for i in range(len(count_product_procent_)):
-    if count_product_procent_[i] >= 0.2:
-        count_product_procent.append([unique_products[i], count_product_procent_[i]])
-mass_two_product = []
-for i in range(len(count_product_procent)-1):
-    for j in range(i + 1, len(count_product_procent)):
-        mass_two_product.append([count_product_procent[i][0], count_product_procent[j][0]])
-suported_mass_two_product_ = []
-for x in mass_two_product:
+
+mass_group_products = []
+mass_group_products_str = []
+count = 1
+last_len = 0
+for mass in group_products_receipts:
+    start_time = time.time()
+    print('-' * 25)
+    print(f'Элемент {count} / {len(group_products_receipts)}')
+    print('Количество элементов =', len(mass))
+    if len(mass) > 4:
+        n = 4
+    else:
+        n = len(mass)
+    print(f'Максимум элементов = {n}')
+    groups = []
+    for count_item in range(1, n + 1):
+        permutation = itertools.permutations(mass, count_item)
+        comb_not_sort = []
+        for comb in permutation:
+            groups.append(list(comb))
+    for i in range(len(groups)):
+        for j in range(len(groups)):
+            if i != j and set(groups[j]).isdisjoint(groups[i]) and set(groups[i]).isdisjoint(groups[j]):
+                if sum([groups[i], groups[j]], []) not in mass_group_products_str:
+                    mass_group_products_str.append(sum([groups[i], groups[j]], []))
+                    mass_group_products.append([groups[i], groups[j]])
+    print("Время = %s seconds" % (time.time() - start_time))
+    print(f"Получено сочетаний {len(mass_group_products) - last_len}")
+    print(f"Всего элементов = {len(mass_group_products)}")
+    count += 1
+    last_len = len(group_products_receipts)
+print('\n' * 1)
+print(len(mass_group_products))
+
+for i in range(len(mass_group_products)):
     count = 0
-    for i in group_products_receipts:
-        if x[0] in i and x[1] in i:
+    for j in group_products_receipts:
+        if set(mass_group_products[i][0]).issubset(j) and set(mass_group_products[i][1]).issubset(j):
             count += 1
-    suported_mass_two_product_.append(count)
-for i in range(len(suported_mass_two_product_)):
-    suported_mass_two_product_[i] = round(suported_mass_two_product_[i] * 100 / len_dataframe, 2)
-suported_mass_two_product = []
-for i in range(len(mass_two_product)):
-    suported_mass_two_product.append([mass_two_product[i][0], mass_two_product[i][1], suported_mass_two_product_[i]])
-for i in range(len(suported_mass_two_product)):
-    print(f'{suported_mass_two_product[i][0]}, {suported_mass_two_product[i][1]} = {suported_mass_two_product[i][2]}%')
-reliability_mass_two_product_ = []
-reliability_mass_two_product__ = []
-for x in mass_two_product:
-    count = 0
-    for i in group_products_receipts:
-        if x[0] in i and x[1] in i:
-            count += 1
-    reliability_mass_two_product_.append(count)
-for x in mass_two_product:
-    count_firs = 0
-    for i in group_products_receipts:
-        if x[0] in i:
-            count_firs += 1
-    reliability_mass_two_product__.append(count_firs)
-for i in range(len(suported_mass_two_product)):
-    reliability_mass_two_product_[i] = round(reliability_mass_two_product_[i] * 100 / reliability_mass_two_product__[i], 2)
-reliability_mass_two_product = []
-for i in range(len(mass_two_product)):
-    reliability_mass_two_product.append([mass_two_product[i][0], mass_two_product[i][1], reliability_mass_two_product_[i]])
-for i in range(len(reliability_mass_two_product)):
-    print(f'{reliability_mass_two_product[i][0]}, {reliability_mass_two_product[i][1]} = {reliability_mass_two_product[i][2]}%')
-lift_mass_two_product_ = []
-lift_mass_two_product__ = []
-
-for i in range(len(reliability_mass_two_product)):
-    lift_mass_two_product_.append(reliability_mass_two_product[i][2])
-
-for x in mass_two_product:
-    count_second = 0
-    for i in group_products_receipts:
-        if x[1] in i:
-            count_second += 1
-    lift_mass_two_product__.append(count_second)
-
-for i in range(len(lift_mass_two_product_)):
-    lift_mass_two_product__[i] = round(lift_mass_two_product__[i] * 100 / len_dataframe)
+    if i == 0:
+        print(f'{count*100}/{count_receipt} = {round((count*100/count_receipt),2)}')
+    mass_group_products[i].append((round((count*100/count_receipt),2)))
 
 
-lift_mass_two_product = []
-for i in range(len(mass_two_product)):
-    lift_mass_two_product.append([mass_two_product[i][0], mass_two_product[i][1], round(lift_mass_two_product_[i]/lift_mass_two_product__[i], 2)])
+for i in range(len(mass_group_products)):
+    count_one = 0
+    count_two = 0
+    for j in group_products_receipts:
+        if set(mass_group_products[i][0]).issubset(j) and set(mass_group_products[i][1]).issubset(j):
+            count_one += 1
+    for j in group_products_receipts:
+        if set(mass_group_products[i][0]).issubset(j):
+            count_two += 1
+    if count_two != 0:
+        mass_group_products[i].append((round((count_one*100/count_two),2)))
+    else:
+        mass_group_products[i].append(0)
 
+for i in range(len(mass_group_products)):
+    count_one = 0
+    for j in group_products_receipts:
+        if set(mass_group_products[i][1]).issubset(j):
+            count_one += 1
+    if (count_one*100/count_receipt) != 0:
+        mass_group_products[i].append((round(mass_group_products[i][-1]/(count_one*100/count_receipt),2)))
+    else:
+        mass_group_products[i].append(0)
 
-for i in range(len(lift_mass_two_product)):
-    print(f'{lift_mass_two_product[i][0]}, {lift_mass_two_product[i][1]} = {lift_mass_two_product[i][2]}%')
+name_for_index = []
+for i in range(len(mass_group_products)):
+    name_A = ''
+    name_B = ''
+    for k in range(len(mass_group_products[i][0])):
+        len_name = len(mass_group_products[i][0])
+        if k != len_name - 1 and len_name != 1:
+            name_A += f'{mass_group_products[i][0][k]}, '
+        else:
+            name_A += f'{mass_group_products[i][0][k]}'
+    for k in range(len(mass_group_products[i][1])):
+        len_name = len(mass_group_products[i][1])
+        if k != len_name - 1 and len_name != 1:
+            name_B += f'{mass_group_products[i][1][k]}, '
+        else:
+            name_B += f'{mass_group_products[i][1][k]}'
+    string = f'{name_A} | {name_B}'
+    name_for_index.append(string)
+
+dataframe = []
+for i in range(len(mass_group_products)):
+    mass = []
+    for j in range(len(mass_group_products[i])):
+        if j != 0 and j != 1:
+            mass.append(mass_group_products[i][j])
+    dataframe.append(mass)
+
+Dataframe = pd.DataFrame(dataframe, columns =['Suported', 'Reliability', 'Lift'], index=name_for_index)
+Dataframe = (Dataframe.loc[Dataframe.Suported < 89])
+Dataframe = (Dataframe.loc[20 < Dataframe.Suported])
+Dataframe = (Dataframe.loc[30 < Dataframe.Reliability])
+Dataframe = (Dataframe.loc[Dataframe.Reliability < 70])
+
+print(Dataframe.sort_values('Lift', ascending=False).head(40))

@@ -5,27 +5,27 @@ import random
 
 
 def generate_data(count):
-    # mass_data = []
-    # for i in range(count // 4):
-    #     mass_data.append([round(random.uniform(0, 2), 2), round(random.uniform(0, 2), 2)])
-    #
-    # for i in range(count // 4):
-    #     mass_data.append([round(random.uniform(0, 2), 2), round(random.uniform(5, 8), 2)])
-    #
-    # for i in range(count // 4):
-    #     mass_data.append([round(random.uniform(5, 7), 2), round(random.uniform(5, 10), 2)])
-    #
-    # for i in range(count // 4):
-    #     mass_data.append([round(random.uniform(9, 10), 2), round(random.uniform(5, 10), 2)])
-    #
-    # for i in range(count // 4):
-    #     mass_data.append([round(random.uniform(2, 3), 2), round(random.uniform(7, 8), 2)])
-    #
-    # for i in range(count // 4):
-    #     mass_data.append([round(random.uniform(3, 3.5), 2), round(random.uniform(7, 8), 2)])
-    #
-    # for i in range(count // 4):
-    #     mass_data.append([round(random.uniform(3, 3.5), 2), round(random.uniform(5, 7), 2)])
+    mass_data = []
+    for i in range(count // 4):
+        mass_data.append([round(random.uniform(0, 2), 2), round(random.uniform(0, 2), 2)])
+
+    for i in range(count // 4):
+        mass_data.append([round(random.uniform(0, 2), 2), round(random.uniform(5, 8), 2)])
+
+    for i in range(count // 4):
+        mass_data.append([round(random.uniform(5, 7), 2), round(random.uniform(5, 10), 2)])
+
+    for i in range(count // 4):
+        mass_data.append([round(random.uniform(9, 10), 2), round(random.uniform(5, 10), 2)])
+
+    for i in range(count // 4):
+        mass_data.append([round(random.uniform(2, 3), 2), round(random.uniform(7, 8), 2)])
+
+    for i in range(count // 4):
+        mass_data.append([round(random.uniform(3, 3.5), 2), round(random.uniform(7, 8), 2)])
+
+    for i in range(count // 4):
+        mass_data.append([round(random.uniform(3, 3.5), 2), round(random.uniform(5, 7), 2)])
     # print(mass_data)
     # mass_data = [[1.93, 1.81], [0.91, 0.03], [1.2, 0.84], [0.47, 1.35], [1.29, 0.39], [1.84, 1.99], [0.32, 0.87],
     #              [0.43, 1.71], [1.76, 0.49], [0.5, 0.54], [0.37, 1.07], [0.79, 0.29], [1.12, 0.74], [0.54, 0.75],
@@ -44,7 +44,7 @@ def generate_data(count):
     #              [3.3, 7.87], [3.35, 7.01], [3.08, 7.38], [3.47, 7.04], [3.15, 6.84], [3.45, 6.08], [3.41, 6.22],
     #              [3.41, 6.46], [3.08, 5.21], [3.11, 5.16], [3.41, 6.57], [3.18, 6.64], [3.42, 6.37], [3.26, 6.42],
     #              [3.32, 5.0], [3.15, 6.46], [3.24, 5.23], [3.35, 5.13], [3.16, 5.47], [3.41, 6.5], [3.06, 6.65]]
-    mass_data = [[9, 6], [0, 7], [7, 5], [9, 8], [1, 8], [9, 3], [0, 8], [8, 1], [0, 2], [3, 7]]
+    # mass_data = [[9, 6], [0, 7], [7, 5], [9, 8], [1, 8], [9, 3], [0, 8], [8, 1], [0, 2], [3, 7]]
 
     return mass_data
 
@@ -216,7 +216,7 @@ def central_point(central_cluster):
         for j in mass_cluster_contour[ii]:
             len_a += math.sqrt((data[i][0] - data[j][0]) ** 2 + (data[i][1] - data[j][1]) ** 2)
         print(f"({round(len_a,2)} / 4) * 0.75) = {round((len_a / 4) * 0.75,2)})")
-        mass_len_a.append((len_a / 4) * 0.50)
+        mass_len_a.append((len_a / 4) * 0.75)
     print(mass_len_a, 'lenn_a')
     mass_to_splete = []
     for k, kk in enumerate(mass_cluster_contour):
@@ -295,7 +295,7 @@ def central_point(central_cluster):
               '#FFFF00', '#808000', '#00FF00', '#008000', '#0000FF']
     for i in range(len(data)):
         axis.scatter(data[i][0], data[i][1], color=colors[massive_path[i]])
-    plt.title('График данных')
+    plt.title(f'График данные cure')
     plt.xlabel('Ось X')
     plt.ylabel('Ось Y')
     plt.savefig('static//start_graph_c_end.png')

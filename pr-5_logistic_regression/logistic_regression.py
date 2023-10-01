@@ -6,32 +6,32 @@ import matplotlib.pyplot as plt
 def generate_value(count):  # генерируем данные
     mass_data = []
     mass_answers = []
-    mass_data = [[0.46, 0.43],
-                 [0.62, 0.36],
-                 [0.53, 0.93],
-                 [0.73, 0.12],
-                 [0.5, 0.91],
-                 [0.82, 0.08],
-                 [0.03, 1.0],
-                 [0.82, 0.21],
-                 [0.4, 0.18],
-                 [0.25, 0.01]]
-    mass_answers = [0, 0, 1, 0, 1, 0, 1, 1, 0, 0]
+    # mass_data = [[0.46, 0.43],
+    #              [0.62, 0.36],
+    #              [0.53, 0.93],
+    #              [0.73, 0.12],
+    #              [0.5, 0.91],
+    #              [0.82, 0.08],
+    #              [0.03, 1.0],
+    #              [0.82, 0.21],
+    #              [0.4, 0.18],
+    #              [0.25, 0.01]]
+    # mass_answers = [0, 0, 1, 0, 1, 0, 1, 1, 0, 0]
 
-    # for i in range(count):
-    #     x = random.randint(0, 100)
-    #     y = random.randint(0, 100)
-    #     if x + y >= 100:
-    #         mass_data.append([x / 100, y / 100])
-    #         mass_answers.append(1)
-    #     else:
-    #         mass_data.append([x / 100, y / 100])
-    #         mass_answers.append(0)
+    for i in range(count):
+        x = random.randint(0, 100)
+        y = random.randint(0, 100)
+        if x + y >= 100:
+            mass_data.append([x / 100, y / 100])
+            mass_answers.append(1)
+        else:
+            mass_data.append([x / 100, y / 100])
+            mass_answers.append(0)
 
-    # for i in mass_data:
-    #     print(str(i[1]).replace('.', ','))
-    #     # x = x.replace('.', ',')
-    #     # print(x)
+    for i in mass_data:
+        print(str(i[1]).replace('.', ','))
+        # x = x.replace('.', ',')
+        # print(x)
     # print("mass_answers")
     # for i in mass_answers:
     #     print(i)
@@ -145,7 +145,7 @@ def stop_graph(mass_data, mass_answers, weights, program_answer):
         axis.scatter(summ_point_exam[i], sigmoid, color=f'{mass_color[mass_answers[i]][0]}')
     plt.plot(summ_point_exam, mass_sigm, color='orange')
     plt.axhline(y=0.5, color='black', linestyle='-')
-    plt.title('Конечный граф распеределния')
+    plt.title('Конечный граф распеределния Логистической регресии')
     plt.savefig('static//stop_graph.png')
 
 
@@ -163,7 +163,7 @@ def predict(x, y):
 
 
 if __name__ == '__main__':
-    count_value = 10
+    count_value = 50
     logloss = []
     data, answers = generate_value(count_value)
     # classifier_weights = [random.random(), random.random(), random.random()]
@@ -171,7 +171,7 @@ if __name__ == '__main__':
     print(f'Изначальные веса: {classifier_weights}')
     start_graph(data, answers, classifier_weights)
     program_answer = calculation_program_answer(data, answers, classifier_weights)
-    count_interation = 50
+    count_interation = 150
     for iteration in range(count_interation):
         print(f'\nИтерация {iteration} |', end='')
         program_answer = calculation_program_answer(data, answers, classifier_weights)

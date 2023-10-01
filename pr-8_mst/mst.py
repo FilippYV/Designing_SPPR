@@ -1,6 +1,4 @@
-import matplotlib.pyplot as plt
 from pyvis.network import Network
-import random
 import time
 
 
